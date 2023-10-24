@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "867216782979",
+    "project_id": "jei-lms-app",
+    "storage_bucket": "jei-lms-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867216782979:android:f28efa642d25a85a87cdb6",
+        "android_client_info": {
+          "package_name": "com.example.lms_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCsJ6iBJ2mJ6wgFjJL8wCPi0KxrnW_fV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

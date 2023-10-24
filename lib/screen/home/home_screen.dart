@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lms_app/Utils/image.dart';
 import 'package:lms_app/screen/course_screen.dart';
+import 'package:lms_app/service/firebase_service.dart';
 import 'package:lms_app/widget/horizontal_list.dart';
 import 'package:lms_app/widget/vertical_list.dart';
 
@@ -14,6 +16,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<String> id = [];
+  Future getID() async {
+    await FirebaseFirestore.instance.collection('course').get().then(
+          (snapshot) => snapshot.docs.forEach(
+            (element) {
+              print('hellooooooooooooo, ${element.reference}');
+            },
+          ),
+        );
+  }
+
+  @override
+  void initState() {
+    getID();
+    super.initState();
+  }
+
   final List<String> titless = <String>[
     'helloo',
     'test1',
