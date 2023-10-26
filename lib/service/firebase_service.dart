@@ -14,6 +14,7 @@ class FirebaseService {
         Map<String, dynamic> map = {
           'name': docdata['name'],
           'image': docdata['image'],
+          'id': doc.id,
         };
         List<VideoModel> listvid = [];
         await FirebaseFirestore.instance
@@ -24,6 +25,7 @@ class FirebaseService {
             .then((value) {
           for (var doc1 in value.docs) {
             final docdata1 = doc1.data();
+            docdata1['videoid'] = doc1.id;
             listvid.add(VideoModel.fromMap(docdata1));
           }
         });
@@ -33,5 +35,15 @@ class FirebaseService {
       }
     });
     return courselist;
+  }
+
+  Future<void> changeWatchState(
+      String playListId, String videoId, bool watchingState) async {
+    await FirebaseFirestore.instance
+        .collection('course')
+        .doc(playListId)
+        .collection('vid')
+        .doc(videoId)
+        .update({'isWatched': watchingState});
   }
 }

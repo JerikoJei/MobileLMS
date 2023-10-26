@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => CourseScreen(
-                            course: courseProvider.courselist[index],
+                            index: index,
                           ),
                         ),
                       );
@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => CourseScreen(
-                                course: courseProvider.courselist[index],
+                                index: index,
                               )));
                     },
                     child: VerticalList(
