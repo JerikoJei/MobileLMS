@@ -26,7 +26,6 @@ class FirebaseService {
             final docdata1 = doc1.data();
             listvid.add(VideoModel.fromMap(docdata1));
           }
-          print(listvid);
         });
         map['listvid'] = listvid;
         final CourseModel data = CourseModel.fromMap(map);
