@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lms_app/firebase_options.dart';
 import 'package:lms_app/provider/bottom_nav_provider.dart';
+import 'package:lms_app/provider/course_provider.dart';
 import 'package:lms_app/widget/nav_bar_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -19,22 +20,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        textTheme: TextTheme(
-          titleLarge: GoogleFonts.roboto(
-            fontSize: 25,
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (BuildContext context) => BottomNavProvider(),
           ),
-        ),
-      ),
-      home: ChangeNotifierProvider(
-        create: (BuildContext context) => BottomNavProvider(),
-        child: const NavBarWidget(),
-      ),
-    );
+          ChangeNotifierProvider(
+            create: (BuildContext context) => CourseProvider(),
+          )
+        ],
+        builder: (context, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+              textTheme: TextTheme(
+                titleLarge: GoogleFonts.roboto(
+                  fontSize: 25,
+                ),
+              ),
+            ),
+            home: const NavBarWidget(),
+          );
+        });
   }
 }

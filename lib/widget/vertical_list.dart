@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lms_app/model/course_model.dart';
 
 class VerticalList extends StatelessWidget {
-  const VerticalList({super.key, required this.images, required this.titles});
-  final String images, titles;
+  const VerticalList({super.key, required this.course});
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class VerticalList extends StatelessWidget {
                 height: 115,
                 width: 115,
                 decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(images))),
+                    image: DecorationImage(image: NetworkImage(course.image))),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15),
@@ -33,7 +34,7 @@ class VerticalList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        titles,
+                        course.name,
                         style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

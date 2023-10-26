@@ -1,12 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lms_app/Utils/image.dart';
+import 'package:lms_app/provider/course_provider.dart';
 import 'package:lms_app/screen/course_screen.dart';
-import 'package:lms_app/service/firebase_service.dart';
+
 import 'package:lms_app/widget/horizontal_list.dart';
 import 'package:lms_app/widget/vertical_list.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,29 +17,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> id = [];
-  Future getID() async {
-    await FirebaseFirestore.instance.collection('course').get().then(
-          (snapshot) => snapshot.docs.forEach(
-            (element) {
-              print('hellooooooooooooo, ${element.reference}');
-            },
-          ),
-        );
-  }
+  late CourseProvider courseProvider;
 
   @override
   void initState() {
-    getID();
+    courseProvider = Provider.of<CourseProvider>(context, listen: false);
     super.initState();
   }
 
-  final List<String> titless = <String>[
-    'helloo',
-    'test1',
-    'test2',
-    'test3',
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,26 +82,32 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(
             height: 250,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              itemCount: titless.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  child: HorizontalList(
-                    title: titless[index],
-                    subtitle: 'this is just for testing, good luck for me hehe',
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CourseScreen(
-                              titles: titless[index],
-                              imagess: images[index],
-                            )));
-                  },
-                );
-              },
-            ),
+            child:
+                Consumer<CourseProvider>(builder: (context, courseProvider, _) {
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                itemCount: courseProvider.courselist.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    child: HorizontalList(
+                      title: courseProvider.courselist[index].name,
+                      subtitle:
+                          'this is just for testing, good luck for me hehe',
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CourseScreen(
+                            course: courseProvider.courselist[index],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            }),
           ),
           const SizedBox(
             height: 12,
@@ -131,23 +123,25 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 12,
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: 3,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CourseScreen(
-                              imagess: images[index],
-                              titles: titless[index],
-                            )));
-                  },
-                  child: VerticalList(
-                      images: images[index], titles: titless[index]));
-            },
-          )
+          Consumer<CourseProvider>(builder: (context, courseProvider, _) {
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: courseProvider.courselist.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CourseScreen(
+                                course: courseProvider.courselist[index],
+                              )));
+                    },
+                    child: VerticalList(
+                      course: courseProvider.courselist[index],
+                    ));
+              },
+            );
+          })
         ],
       ),
     );
