@@ -15,6 +15,7 @@ class FirebaseService {
           'name': docdata['name'],
           'image': docdata['image'],
           'id': doc.id,
+          'isFav': docdata['isFav'],
         };
         List<VideoModel> listvid = [];
         await FirebaseFirestore.instance
@@ -38,12 +39,19 @@ class FirebaseService {
   }
 
   Future<void> changeWatchState(
-      String playListId, String videoId, bool watchingState) async {
+      String courseId, String videoId, bool watchingState) async {
     await FirebaseFirestore.instance
         .collection('course')
-        .doc(playListId)
+        .doc(courseId)
         .collection('vid')
         .doc(videoId)
         .update({'isWatched': watchingState});
+  }
+
+  Future<void> changeFavState(String courseId, bool favState) async {
+    await FirebaseFirestore.instance
+        .collection('course')
+        .doc(courseId)
+        .update({'isFav': favState});
   }
 }

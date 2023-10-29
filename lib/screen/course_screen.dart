@@ -13,16 +13,15 @@ class CourseScreen extends StatefulWidget {
 }
 
 class _CourseScreenState extends State<CourseScreen> {
-  late CourseProvider courseProvider;
+  late CourseProvider courseProvider1;
   @override
   void initState() {
-    courseProvider = Provider.of<CourseProvider>(context, listen: false);
+    courseProvider1 = Provider.of<CourseProvider>(context, listen: false);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    bool fav = false;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -34,7 +33,7 @@ class _CourseScreenState extends State<CourseScreen> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(
-                            courseProvider.courselist[widget.index].image)),
+                            courseProvider1.courselist[widget.index].image)),
                     gradient: const LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -45,29 +44,33 @@ class _CourseScreenState extends State<CourseScreen> {
                     ),
                   ),
                 ),
-                title: Text(courseProvider.courselist[widget.index].name),
+                title: Text(courseProvider1.courselist[widget.index].name),
               ),
               actions: [
-                Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: fav == false
-                        ? IconButton(
-                            icon: const Icon(
-                              Icons.favorite,
-                              color: Colors.white54,
-                            ),
-                            onPressed: () {
-                              fav = true;
-                            },
-                          )
-                        : IconButton(
-                            onPressed: () {
-                              fav = false;
-                            },
-                            icon: const Icon(
-                              Icons.favorite,
-                              color: Colors.pink,
-                            ))),
+                Consumer<CourseProvider>(
+                  builder: (context, courseProvider, _) => Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: courseProvider.isFavg == false
+                          ? IconButton(
+                              icon: const Icon(
+                                Icons.favorite,
+                                color: Colors.white54,
+                              ),
+                              onPressed: () {
+                                courseProvider.isFav(
+                                    courseProvider.courselist[widget.index]);
+                              },
+                            )
+                          : IconButton(
+                              onPressed: () {
+                                courseProvider.isNotFav(
+                                    courseProvider.courselist[widget.index]);
+                              },
+                              icon: const Icon(
+                                Icons.favorite,
+                                color: Colors.pink,
+                              ))),
+                ),
               ]),
           SliverToBoxAdapter(
             child: SizedBox(
@@ -104,6 +107,8 @@ class _CourseScreenState extends State<CourseScreen> {
                             return GestureDetector(
                               onTap: () {
                                 courseProvider.currentPlayed = index;
+                                courseProvider.checkWatch(
+                                    courseProvider.courselist[widget.index]);
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => VideoPlayer(
                                           courseid: courseProvider

@@ -8,12 +8,13 @@ import 'package:lms_app/widget/video_player_widget.dart';
 import 'package:provider/provider.dart';
 
 class VideoPlayer extends StatefulWidget {
-  const VideoPlayer(
-      {super.key,
-      required this.videourl,
-      required this.datavid,
-      required this.namavid,
-      required this.courseid});
+  const VideoPlayer({
+    super.key,
+    required this.videourl,
+    required this.datavid,
+    required this.namavid,
+    required this.courseid,
+  });
   final String videourl, namavid;
   final List<VideoModel> datavid;
   final CourseModel courseid;
@@ -36,7 +37,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
             ),
           ),
         ),
-        title: const Text('Hello'),
+        title: Text(widget.namavid),
       ),
       body: Consumer<CourseProvider>(
         builder: (context, courseProvider, _) => Column(
@@ -59,10 +60,22 @@ class _VideoPlayerState extends State<VideoPlayer> {
             const SizedBox(
               height: 10,
             ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Consumer<CourseProvider>(
+                builder: (context, courseProvider, _) => Text(
+                  'Status : ${courseProvider.status}',
+                  style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w500, fontSize: 15),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Expanded(
               child: Consumer<CourseProvider>(
-                  builder: (context, courseProvider, child) =>
-                      Column(children: [
+                  builder: (context, courseProvider, _) => Column(children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -99,6 +112,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                               return GestureDetector(
                                   onTap: () {
                                     courseProvider.currentPlayed = index;
+                                    courseProvider.checkWatch(widget.courseid);
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                         builder: (context) => VideoPlayer(

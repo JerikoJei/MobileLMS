@@ -96,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           'this is just for testing, good luck for me hehe',
                     ),
                     onTap: () {
+                      courseProvider.checkFav(courseProvider.courselist[index]);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => CourseScreen(
@@ -131,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                     onTap: () {
+                      courseProvider.checkFav(courseProvider.courselist[index]);
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => CourseScreen(
                                 index: index,
