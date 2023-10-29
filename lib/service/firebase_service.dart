@@ -54,4 +54,41 @@ class FirebaseService {
         .doc(courseId)
         .update({'isFav': favState});
   }
+
+  Future<List<CourseModel>> getFavCourse() async {
+    final List<CourseModel> favCourselist = [];
+
+    await FirebaseFirestore.instance
+        .collection('course')
+        .where('isFav', isEqualTo: true)
+        .get()
+        .then((value) async {
+      for (var doc in value.docs) {
+        final docdata = doc.data();
+        Map<String, dynamic> map = {
+          'name': docdata['name'],
+          'image': docdata['image'],
+          'id': doc.id,
+          'isFav': docdata['isFav'],
+        };
+        List<VideoModel> listvid = [];
+        await FirebaseFirestore.instance
+            .collection('course')
+            .doc(doc.id)
+            .collection('vid')
+            .get()
+            .then((value) {
+          for (var doc1 in value.docs) {
+            final docdata1 = doc1.data();
+            docdata1['videoid'] = doc1.id;
+            listvid.add(VideoModel.fromMap(docdata1));
+          }
+        });
+        map['listvid'] = listvid;
+        final CourseModel data = CourseModel.fromMap(map);
+        favCourselist.add(data);
+      }
+    });
+    return favCourselist;
+  }
 }

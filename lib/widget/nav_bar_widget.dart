@@ -41,6 +41,7 @@ class _HomeScreenState extends State<NavBarWidget> {
           child: Consumer<BottomNavProvider>(
             builder: (context, bottomNavProv, _) {
               return GNav(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 padding: const EdgeInsets.all(15),
                 backgroundColor: Colors.deepPurple,
                 tabBackgroundColor: Colors.deepPurple.shade800,
@@ -56,10 +57,6 @@ class _HomeScreenState extends State<NavBarWidget> {
                   GButton(
                     icon: Icons.favorite,
                     text: 'Favorite',
-                  ),
-                  GButton(
-                    icon: Icons.play_arrow,
-                    text: 'Learning',
                   ),
                 ],
               );

@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     courseProvider = Provider.of<CourseProvider>(context, listen: false);
+    courseProvider.getCourseList();
     super.initState();
   }
 
