@@ -3,10 +3,10 @@ import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lms_app/Utils/image.dart';
 import 'package:lms_app/provider/course_provider.dart';
-import 'package:lms_app/screen/course_screen.dart';
+import 'package:lms_app/view/screen/course_screen.dart';
 
-import 'package:lms_app/widget/horizontal_list.dart';
-import 'package:lms_app/widget/vertical_list.dart';
+import 'package:lms_app/view/widget/horizontal_list.dart';
+import 'package:lms_app/view/widget/vertical_list.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {

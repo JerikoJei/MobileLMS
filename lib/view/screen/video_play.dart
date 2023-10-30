@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lms_app/model/course_model.dart';
 import 'package:lms_app/model/video_model.dart';
 import 'package:lms_app/provider/course_provider.dart';
-import 'package:lms_app/widget/playlist_widget.dart';
-import 'package:lms_app/widget/video_player_widget.dart';
+import 'package:lms_app/view/widget/playlist_widget.dart';
+import 'package:lms_app/view/widget/video_player_widget.dart';
 import 'package:provider/provider.dart';
 
 class VideoPlayer extends StatefulWidget {

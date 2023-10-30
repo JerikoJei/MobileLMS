@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lms_app/provider/course_provider.dart';
-import 'package:lms_app/screen/fav_course_screen.dart';
-import 'package:lms_app/widget/vertical_list.dart';
+import 'package:lms_app/view/screen/fav_course_screen.dart';
+import 'package:lms_app/view/widget/vertical_list.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatefulWidget {
