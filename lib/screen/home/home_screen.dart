@@ -134,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return GestureDetector(
                     onTap: () {
                       courseProvider.checkFav(courseProvider.courselist[index]);
+
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => CourseScreen(
                                 index: index,

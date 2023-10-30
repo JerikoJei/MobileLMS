@@ -51,14 +51,15 @@ class CourseProvider extends ChangeNotifier {
     } else {
       status = 'not watched';
     }
-    notifyListeners();
     getCourseList();
+    notifyListeners();
   }
 
   void isFav(CourseModel courseModel) async {
     await FirebaseService().changeFavState(courseModel.id, true);
     courseModel.isFav = true;
     isFavg = true;
+
     getCourseList();
     notifyListeners();
   }
@@ -67,6 +68,7 @@ class CourseProvider extends ChangeNotifier {
     await FirebaseService().changeFavState(courseModel.id, false);
     courseModel.isFav = false;
     isFavg = false;
+
     getCourseList();
     notifyListeners();
   }
@@ -77,8 +79,9 @@ class CourseProvider extends ChangeNotifier {
     } else {
       isFavg = false;
     }
-    notifyListeners();
+    getFavlist();
     getCourseList();
+    notifyListeners();
   }
 
   void getFavlist() async {
