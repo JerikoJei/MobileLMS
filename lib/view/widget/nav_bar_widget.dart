@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lms_app/provider/bottom_nav_provider.dart';
 import 'package:lms_app/view/screen/home/favorite_screen.dart';
 import 'package:lms_app/view/screen/home/home_screen.dart';
-import 'package:lms_app/view/screen/home/learning_screen.dart';
 
 import 'package:provider/provider.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -18,7 +17,6 @@ class _HomeScreenState extends State<NavBarWidget> {
   final List<Widget> page = <Widget>[
     const HomeScreen(),
     const FavoriteScreen(),
-    const LearningScreen(),
   ];
   @override
   Widget build(BuildContext context) {
