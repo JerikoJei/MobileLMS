@@ -25,79 +25,61 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Your Favorite',
-            style: TextStyle(color: Colors.white),
-          ),
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[Colors.deepPurpleAccent, Colors.deepPurple],
-              ),
+      appBar: AppBar(
+        title: const Text(
+          'Your Favorite',
+          style: TextStyle(color: Colors.white),
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[Colors.deepPurpleAccent, Colors.deepPurple],
             ),
           ),
         ),
-        body: RefreshIndicator(
-          color: Colors.white,
-          backgroundColor: Colors.blue,
-          onRefresh: () async {
-            // Replace this delay with the code to be executed during refresh
-            // and return asynchronous code
-            courseProvider1.getFavlist();
-            return Future<void>.delayed(const Duration(seconds: 3));
-          },
-          // This check is used to customize listening to scroll notifications
-          // from the widget's children.
-          //
-          // By default this is set to `notification.depth == 0`, which ensures
-          // the only the scroll notifications from the first child are listened to.
-          //
-          // Here setting `notification.depth == 1` triggers the refresh indicator
-          // when overscrolling the nested scroll view.
-          notificationPredicate: (ScrollNotification notification) {
-            return notification.depth == 1;
-          },
-          child: ListView(children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Consumer<CourseProvider>(builder: (context, courseProvider, _) {
-              return courseProvider1.favCourseList.isNotEmpty
-                  ? ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: courseProvider.favCourseList.length,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                            onTap: () {
-                              courseProvider.checkFav(
-                                  courseProvider.favCourseList[index]);
+      ),
+      body: ListView(children: [
+        const SizedBox(
+          height: 20,
+        ),
+        Consumer<CourseProvider>(builder: (context, courseProvider, _) {
+          return courseProvider1.favCourseList.isNotEmpty
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: courseProvider.favCourseList.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () async {
+                          courseProvider
+                              .checkFav(courseProvider.favCourseList[index]);
 
-                              Navigator.of(context).push(MaterialPageRoute(
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(
                                   builder: (context) => FavCourseScreen(
                                         index: index,
-                                      )));
-                            },
-                            child: VerticalList(
-                              course: courseProvider.favCourseList[index],
-                            ));
-                      },
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Text(
-                        'Your Favorite List is Still Empty',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 34,
-                        ),
-                      ));
-            })
-          ]),
-        ));
+                                      )))
+                              .then((value) => courseProvider.getFavlist());
+                        },
+                        child: VerticalList(
+                          course: courseProvider.favCourseList[index],
+                        ));
+                  },
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Text(
+                    'Your Favorite List is Still Empty',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 34,
+                    ),
+                  ));
+        })
+      ]),
+    );
   }
 }

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lms_app/firebase_options.dart';
 import 'package:lms_app/provider/bottom_nav_provider.dart';
 import 'package:lms_app/provider/course_provider.dart';
+import 'package:lms_app/provider/search_course_provider.dart';
 import 'package:lms_app/view/widget/nav_bar_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (BuildContext context) => CourseProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (BuildContext context) => SearchCourseProvider(),
           )
         ],
         builder: (context, child) {

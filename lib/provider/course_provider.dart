@@ -5,12 +5,13 @@ import 'package:lms_app/service/firebase_service.dart';
 class CourseProvider extends ChangeNotifier {
   List<CourseModel> courselist = [];
   List<CourseModel> favCourseList = [];
+  FirebaseService firebase = FirebaseService();
   String status = '';
   bool isFavg = false;
   int currentPlayed = 0;
 
   void getCourseList() async {
-    courselist = await FirebaseService().getCourse();
+    courselist = await firebase.getCourse();
 
     notifyListeners();
   }
@@ -85,7 +86,7 @@ class CourseProvider extends ChangeNotifier {
   }
 
   void getFavlist() async {
-    favCourseList = await FirebaseService().getFavCourse();
+    favCourseList = await firebase.getFavCourse();
     notifyListeners();
   }
 }

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lms_app/Utils/image.dart';
 import 'package:lms_app/provider/course_provider.dart';
 import 'package:lms_app/view/screen/course_screen.dart';
+import 'package:lms_app/view/screen/search_course.dart';
 
 import 'package:lms_app/view/widget/horizontal_list.dart';
 import 'package:lms_app/view/widget/vertical_list.dart';
@@ -44,6 +45,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+        actions: [
+          IconButton(
+              onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const SearchCourse())),
+              icon: const Icon(
+                Icons.search,
+                color: Colors.white,
+              ))
+        ],
       ),
       body: ListView(
         children: [
