@@ -29,7 +29,7 @@ class CourseProvider extends ChangeNotifier {
   }
 
   void isnotwatched(CourseModel courseModel) async {
-    await FirebaseService().changeWatchState(
+    await firebase.changeWatchState(
         courseModel.id, courseModel.listvid[currentPlayed].videoid, false);
     courseModel.listvid[currentPlayed].isWatched = false;
     checkWatch(courseModel);
@@ -38,7 +38,7 @@ class CourseProvider extends ChangeNotifier {
   }
 
   void iswatched(CourseModel courseModel) async {
-    await FirebaseService().changeWatchState(
+    await firebase.changeWatchState(
         courseModel.id, courseModel.listvid[currentPlayed].videoid, true);
     courseModel.listvid[currentPlayed].isWatched = true;
     checkWatch(courseModel);
@@ -57,7 +57,7 @@ class CourseProvider extends ChangeNotifier {
   }
 
   void isFav(CourseModel courseModel) async {
-    await FirebaseService().changeFavState(courseModel.id, true);
+    await firebase.changeFavState(courseModel.id, true);
     courseModel.isFav = true;
     isFavg = true;
 
@@ -66,7 +66,7 @@ class CourseProvider extends ChangeNotifier {
   }
 
   void isNotFav(CourseModel courseModel) async {
-    await FirebaseService().changeFavState(courseModel.id, false);
+    await firebase.changeFavState(courseModel.id, false);
     courseModel.isFav = false;
     isFavg = false;
 
@@ -82,11 +82,14 @@ class CourseProvider extends ChangeNotifier {
     }
     getFavlist();
     getCourseList();
-    notifyListeners();
   }
 
   void getFavlist() async {
     favCourseList = await firebase.getFavCourse();
     notifyListeners();
+  }
+
+  void backfav() {
+    favCourseList.clear();
   }
 }

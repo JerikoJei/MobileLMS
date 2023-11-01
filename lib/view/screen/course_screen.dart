@@ -17,6 +17,7 @@ class _CourseScreenState extends State<CourseScreen> {
   @override
   void initState() {
     courseProvider1 = Provider.of<CourseProvider>(context, listen: false);
+    courseProvider1.checkFav(courseProvider1.courselist[widget.index]);
     super.initState();
   }
 

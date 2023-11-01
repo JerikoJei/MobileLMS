@@ -53,15 +53,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                         onTap: () async {
-                          courseProvider
-                              .checkFav(courseProvider.favCourseList[index]);
-
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(
-                                  builder: (context) => FavCourseScreen(
-                                        index: index,
-                                      )))
-                              .then((value) => courseProvider.getFavlist());
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => FavCourseScreen(
+                                    index: index,
+                                  )));
                         },
                         child: VerticalList(
                           course: courseProvider.favCourseList[index],

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class HorizontalList extends StatelessWidget {
-  const HorizontalList(
-      {super.key, required this.title, required this.subtitle});
+  const HorizontalList({super.key, required this.title, required this.image});
 
-  final String title, subtitle;
+  final String title, image;
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +40,11 @@ class HorizontalList extends StatelessWidget {
               left: 11,
               top: 80,
               right: 11,
-              child: Text(
-                subtitle,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25),
+              child: Container(
+                height: 115,
+                width: 115,
+                decoration: BoxDecoration(
+                    image: DecorationImage(image: NetworkImage(image))),
               ),
             ),
           ],

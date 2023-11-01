@@ -17,6 +17,7 @@ class _FavCourseScreenState extends State<FavCourseScreen> {
   @override
   void initState() {
     courseProvider1 = Provider.of<CourseProvider>(context, listen: false);
+    courseProvider1.checkFav(courseProvider1.favCourseList[widget.index]);
     super.initState();
   }
 
@@ -26,6 +27,13 @@ class _FavCourseScreenState extends State<FavCourseScreen> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar.large(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  courseProvider1.getFavlist();
+                  Navigator.pop(context);
+                },
+              ),
               foregroundColor: Colors.white,
               backgroundColor: Colors.deepPurple,
               flexibleSpace: FlexibleSpaceBar(
@@ -89,50 +97,69 @@ class _FavCourseScreenState extends State<FavCourseScreen> {
                       height: 10,
                     ),
                     Consumer<CourseProvider>(
-                      builder: (context, courseProvider, _) =>
-                          LinearProgressIndicator(
-                        value: courseProvider.watchProgress(
-                            courseProvider.favCourseList[widget.index]),
-                        backgroundColor: Colors.black12,
-                        color: Colors.deepPurple,
-                      ),
-                    ),
+                        builder: (context, courseProvider, _) {
+                      if (courseProvider1.favCourseList.isEmpty) {
+                        return const Center(
+                          child: Text('List Masih Kosong'),
+                        );
+                      } else {
+                        return LinearProgressIndicator(
+                          value: courseProvider.watchProgress(
+                              courseProvider.favCourseList[widget.index]),
+                          backgroundColor: Colors.black12,
+                          color: Colors.deepPurple,
+                        );
+                      }
+                    }),
                     Expanded(
                       child: Consumer<CourseProvider>(
-                        builder: (context, courseProvider, _) =>
-                            ListView.builder(
-                          itemCount: courseProvider
-                              .favCourseList[widget.index].listvid.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                courseProvider.currentPlayed = index;
-                                courseProvider.checkWatch(
-                                    courseProvider.favCourseList[widget.index]);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => VideoPlayer(
-                                          courseid: courseProvider
-                                              .favCourseList[widget.index],
-                                          videourl: courseProvider
-                                              .favCourseList[widget.index]
-                                              .listvid[index]
-                                              .vid,
-                                          datavid: courseProvider
-                                              .favCourseList[widget.index]
-                                              .listvid,
-                                          namavid: courseProvider
-                                              .favCourseList[widget.index]
-                                              .listvid[index]
-                                              .namavid,
-                                        )));
-                              },
-                              child: PlayListWidget(
-                                vid: courseProvider
-                                    .favCourseList[widget.index].listvid[index],
-                              ),
+                        builder: (context, courseProvider, _) {
+                          if (courseProvider1.favCourseList.isEmpty) {
+                            return const Center(
+                              child: Text('List Masih Kosong'),
                             );
-                          },
-                        ),
+                          } else {
+                            return ListView.builder(
+                              itemCount: courseProvider
+                                  .favCourseList[widget.index].listvid.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    courseProvider.currentPlayed = index;
+                                    courseProvider.checkWatch(courseProvider
+                                        .favCourseList[widget.index]);
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (context) => VideoPlayer(
+                                                  courseid: courseProvider
+                                                          .favCourseList[
+                                                      widget.index],
+                                                  videourl: courseProvider
+                                                      .favCourseList[
+                                                          widget.index]
+                                                      .listvid[index]
+                                                      .vid,
+                                                  datavid: courseProvider
+                                                      .favCourseList[
+                                                          widget.index]
+                                                      .listvid,
+                                                  namavid: courseProvider
+                                                      .favCourseList[
+                                                          widget.index]
+                                                      .listvid[index]
+                                                      .namavid,
+                                                )));
+                                  },
+                                  child: PlayListWidget(
+                                    vid: courseProvider
+                                        .favCourseList[widget.index]
+                                        .listvid[index],
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        },
                       ),
                     ),
                   ],
